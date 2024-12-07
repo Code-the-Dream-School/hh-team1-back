@@ -7,9 +7,17 @@ const ItineraryItemSchema = new mongoose.Schema(
       required: [true, "Error: no name provided for itinerary item."],
       maxlength: 25,
     },
-    date: {
+    ticketmasterID: {
+      type: String,
+      required: [true, "Error: no ticketmasterID provided for itinerary item."],
+    },
+    startDateTime: {
       type: Date,
-      required: [true, "Error: no date provided for itinerary item."],
+      required: [true, "Error: no start date/time provided for itinerary item."],
+    },
+    endDateTime: {
+      type: Date,
+      required: [true, "Error: no end date/time provided for itinerary item."],
     },
     location: {
       address: {
