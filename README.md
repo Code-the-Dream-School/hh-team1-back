@@ -28,3 +28,64 @@ Note: In the below example, the group's front-end repository was named `bb-pract
 ![browser server](images/back-end-running-browser.png)
 
 >Update the .node-version file to match the version of Node.js the **team** is using. This is used by Render.com to [deploy the app](https://render.com/docs/node-version).
+
+### API Endpoints Summary
+
+#### User Routes
+1. Register
+   * Method: POST
+   * URL: http://localhost:8000/api/v1/user/register
+   * JSON Request Body:
+   ```
+   {
+    "firstName": "Amanda",
+    "lastName": "Hockmuth",
+    "email": "amandahockmuth@gmail.com",
+    "password": "Password129",
+    "city": "NY",
+    "state": "NY"
+    }
+   ```
+2. Login
+   * Method: POST
+   * URL: http://localhost:8000/api/v1/user/login
+   * Credentials:
+     * Username: Email(e.g., example@gmail.com)
+     * Password: Password(e.g., Password123)
+
+#### Itinerary Routes:
+1. Get All Itinerary:
+   * Method: GET
+   * URL: http://localhost:8000/api/v1/itinerary/
+2. Get Single Itinerary
+   * Method: GET
+   * URL: http://localhost:8000/api/v1/itinerary/:<id>
+3. Create Itinerary
+   * Method: POST
+   * URL: http://localhost:8000/api/v1/itinerary/
+   * JSON Request Body:
+```
+{
+  "name": "Node",
+  "date": "2024-12-29",
+  "location": {
+    "address": "6780 main St",
+    "city": "NY",
+    "state": "NY",
+    "postalCode": "11364",
+    "coordinates": {
+      "lat": 5,
+      "lng": 5
+    }
+  },
+  "user": "675bb5d8277e1a64f2033539"
+}
+
+```
+4. Update Itinerary
+   * Method: PATCH
+   * URL: http://localhost:8000/api/v1/itinerary/:<id>
+6. Delete Itinerary
+   * Method: DELETE
+   * URL: http://localhost:8000/api/v1/itinerary/:<id>
+
