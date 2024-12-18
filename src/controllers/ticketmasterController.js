@@ -29,12 +29,41 @@ exports.searchEvents = async (req, res) => {
     url += `&endDateTime=${formattedEnd}`;
   }
 
-  console.log(url);
-
   try {
     console.log(url);
     const response = await axios.get(url);
-    res.json(response.data);
+
+    // Check for presence of events in response data
+    if (!response.data._embedded?.events) {
+      res.json({ message: "No Events Returned" });
+    } else {
+      // Format the response data
+      const formattedEvents = response.data._embedded?.events.map((event) => ({
+        name: event.name,
+        dates: {
+          startDate: event.dates.start.localDate,
+          startTime: event.dates?.start?.localTime,
+          endDate: event.dates?.end?.localDate,
+          endTime: event.dates?.end?.localTime,
+        },
+        ticketmasterId: event.id,
+        url: event?.url,
+        info: event?.info,
+        images: event.images?.map((image) => image.url),
+        venue: {
+          name: event._embedded.venues[0].name,
+          address: event._embedded.venues[0].address?.line1,
+          city: event._embedded.venues[0].city.name,
+          state: event._embedded.venues[0].state.name,
+          lat: event._embedded.venues[0].location?.latitude,
+          lon: event._embedded.venues[0].location?.longitude,
+        },
+        classification: event.classifications[0]?.primary
+          ? event.classifications[0].segment.name
+          : "",
+      }));
+      res.json(formattedEvents);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error fetching events" + url });
