@@ -7,7 +7,7 @@ const apiKey = process.env.TICKETMASTER_API_KEY;
 
 exports.searchEvents = async (req, res) => {
   const { city, stateCode } = req.params;
-  const { startDateTime, endDateTime } = req.query;
+  const { dateRangeStart, dateRangeEnd } = req.query;
 
   // Validation: Only check for required fields
   if (!city || !stateCode) {
@@ -20,12 +20,12 @@ exports.searchEvents = async (req, res) => {
   let url = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${apiKey}&city=${city}&stateCode=${stateCode}`;
 
   // Add dates if provided, format with Z time
-  if (startDateTime && startDateTime !== "null") {
-    const formattedStart = `${startDateTime}T00:00:00Z`;
+  if (dateRangeStart && dateRangeStart !== "null") {
+    const formattedStart = `${dateRangeStart}T00:00:00Z`;
     url += `&startDateTime=${formattedStart}`;
   }
-  if (endDateTime && endDateTime !== "null") {
-    const formattedEnd = `${endDateTime}T23:59:59Z`;
+  if (dateRangeEnd && dateRangeEnd !== "null") {
+    const formattedEnd = `${dateRangeEnd}T23:59:59Z`;
     url += `&endDateTime=${formattedEnd}`;
   }
 
