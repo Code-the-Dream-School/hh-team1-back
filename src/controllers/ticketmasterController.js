@@ -30,7 +30,7 @@ exports.searchEvents = async (req, res) => {
   }
 
   try {
-    console.log(`Trying URL: ${url}`);
+    // console.log(`Trying URL: ${url}`);
     const response = await axios.get(url);
 
     // Check for presence of events in response data
@@ -58,7 +58,7 @@ exports.searchEvents = async (req, res) => {
           lat: event._embedded.venues[0].location?.latitude,
           lon: event._embedded.venues[0].location?.longitude,
         },
-        classification: event.classifications[0]?.primary
+        classification: event.classifications?.[0]?.primary
           ? event.classifications[0].segment.name
           : "",
       }));
